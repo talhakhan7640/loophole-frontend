@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react';
 
-const App = () => {
+function App () {
   return (
-    <div className=" font-bold">
-      Welcome to React
+    <div className='home'>
     </div>
   )
 }
