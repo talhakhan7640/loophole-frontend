@@ -30,7 +30,7 @@ const Registration = () => {
         if (response.status == 201) {
           setInterval(() => {
             window.location.assign("/loophole/users/login");
-          }, 3000);
+          }, 2000);
         }
         
         return response.json();
@@ -62,7 +62,7 @@ const Registration = () => {
         <div className="alert p-0">
           <span className="text-red-500 font-semibold">{message}</span>
         </div>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicusername">
             {/* <Form.Label>Username</Form.Label> */}
             <Form.Control
@@ -144,7 +144,5 @@ const Registration = () => {
     </div>
   );
 };
-
-
 
 export default Registration;
