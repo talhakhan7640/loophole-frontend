@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import Cookies from 'universal-cookie';
 import "./Login.css"
 
 const Login = () => {
+  const cookie = new Cookies();
    const [signupCredentials, setSignupCredentials] = useState({
     username: "",
     password: "",
@@ -28,8 +30,9 @@ const Login = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data)
-        setMessage(data.message)
+        setMessage(data.message);
+        cookie.set("TOKEN", data.token, {path: "/"});
+        window.location.assign("/loophole/home");
       })
       .catch((error) =>  {
           console.log(error);
@@ -51,7 +54,7 @@ const Login = () => {
         <div className="alert p-0">
           <span className="text-red-500 font-semibold">{message}</span>
         </div>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicusername">
             {/* <Form.Label>Username</Form.Label> */}
             <Form.Control
