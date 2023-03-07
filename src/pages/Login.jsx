@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import "./Login.css"
+import App from "../App";
 
 const Login = () => {
   const cookie = new Cookies();
@@ -12,11 +13,13 @@ const Login = () => {
     password: "",
   });
   const [message, setMessage] = useState("");
+  var statusCode = "";
+  var usernameAsProp = "";
 
   const handleSubmit = (e) => {
-   e.preventDefault();
+    e.preventDefault();
 
-    const url = "https://loophole-backend.onrender.com/users/login"
+    const url = "https://loophole-backend.onrender.com/users/login";
 
     fetch(url, {
       method: "POST",
@@ -26,20 +29,26 @@ const Login = () => {
       body: JSON.stringify(signupCredentials),
     })
       .then((response) => {
-        console.log(response)
+        statusCode = response.status;
         return response.json();
       })
       .then((data) => {
         setMessage(data.message);
-        cookie.set("TOKEN", data.token, {path: "/"});
-        window.location.assign("/loophole/home");
+        if (statusCode == 200) {
+          cookie.set("TOKEN", data.token, { path: "/" });
+          usernameAsProp = signupCredentials.username;
+          console.log(usernameAsProp);
+          const userContext = React.createContext(usernameAsProp);
+          
+          window.location.assign("/loophole/home");
+        }
       })
-      .catch((error) =>  {
-          console.log(error);
+      .catch((error) => {
+        console.log(error);
       });
-  }
+  };
   return (
-     <div className="login-component">
+    <div className="login-component">
       <div className="form-container mx-auto xl:w-4/12 lg:w-5/12 md:w-7/12 sm:w-8/12 w-11/12">
         <div className="logo py-2 ">
           <span className="text-2xl">#loophole</span>
@@ -73,8 +82,6 @@ const Login = () => {
             />
           </Form.Group>
 
-          
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             {/* <Form.Label>Password</Form.Label> */}
             <Form.Control
@@ -104,7 +111,7 @@ const Login = () => {
             </div>
             <div>
               <Button
-              className="create-account-button "
+                className="create-account-button "
                 variant="primary"
                 onClick={handleSubmit}
               >
