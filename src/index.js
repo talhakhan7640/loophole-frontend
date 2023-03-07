@@ -19,11 +19,6 @@ root.render(
         <Route path="loophole">
           <Route path="home/" element={<AuthRoute component={<App />} />} />
 
-          <Route
-            path="user-profile/"
-            element={<AuthRoute component={<UserProfile />} />}
-          />
-
           <Route path="users/">
             <Route path="signup" element={<Registration />} />
             <Route path="login" element={<Login />} />
