@@ -1,13 +1,14 @@
 import React from "react";
 import Cookies from "universal-cookie";
+import AccessDenied from "../pages/AccessDenied";
 
 const AuthRoute = ({component}) => {
   const cookie = new Cookies();
   console.log(cookie.get("TOKEN"));
-  if (cookie.get("TOKEN") == undefined) {
+  if (cookie.get("TOKEN") == undefined ) {
     return (
       <div>
-        <span>You have to be login first</span>
+        <AccessDenied />
       </div>
     );
   } else {
